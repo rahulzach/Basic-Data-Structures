@@ -1,0 +1,121 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+int data;
+struct node *right;
+struct node *left;
+};
+struct node *CreateBST(struct node*,int);
+void Inorder(struct node*);
+void Preorder(struct node*);
+void Postorder(struct node*);
+
+void main()
+{
+struct node *root = NULL;
+int ch, item,n,i;
+while(1)
+    {
+        printf("\n\nBinary Search Tree Operations\n");
+        printf("\n1. Creation of BST");
+        printf("\n2. Traverse in Inorder");
+        printf("\n3. Traverse in Preorder");
+        printf("\n4. Traverse in Postorder");
+        printf("\n5. Exit\n");
+        printf("\nEnter Choice : ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1 :
+                printf("Enter the number of nodes : ");
+                scanf("%d",&n);
+                for(i=0;i<n;i++)
+                {
+                    printf("Enter the data for node %d : ",i);
+                    scanf("%d",&item);
+                    root= CreateBST(root,item);
+                }
+                break;
+
+            case 2 :
+                printf("BST Traversal in Inorder\n");
+                Inorder(root);
+                break;
+
+            case 3 :
+                printf("BST Traversal in Preorder\n");
+                Preorder(root);
+                break;
+
+            case 4 :
+                printf("BST Traversal in Postorder\n");
+                Postorder(root);
+                break;
+            case 5:
+                printf("TERMINATING");
+                break;
+            default :
+                printf("Invalid option");
+                break;
+        }
+    }
+}
+
+struct node *CreateBST(struct node *root, int item)
+{
+    if(root == NULL)
+    {
+        root=(struct node*)malloc(sizeof(struct node));
+        root->left=root->right=NULL;
+        root->data=item;
+        return(root);
+    }
+
+    else
+    {
+        if(item<(root->data))
+        {
+            root->left=CreateBST(root->left,item);
+        }
+        else if(item>(root->data))
+        {
+            root->right=CreateBST(root->right,item);
+        }
+        else
+            printf("Duplicate element");
+        return(root);
+    }
+}
+
+
+void Inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        Inorder(root->left);
+        printf("%d\t",root->data);
+        Inorder(root->right);
+    }
+}
+
+void Preorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        printf("%d\t",root->data);
+        Preorder(root->left);
+        Preorder(root->right);
+    }
+}
+
+void Postorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+
+        Postorder(root->left);
+        Postorder(root->right);
+        printf("%d\t",root->data);
+    }
+}
