@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    struct node*next;
+    struct node*prev;
+    int data;
+}
+*head,*tail;
+void create();
+void reverse();
+void display();
+int main(){
+    int n,data,choice=1;
+    while(choice!=0){
+        printf("enter choice 1:create,2:reverse,3:display,4:exit");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+            printf("enter number of nodes");
+            scanf("%d",&n);
+            create(n);
+            break;
+      case 2:
+      reverse();
+      break;
+      case 3:
+      display();
+      break;
+      case 4:
+      exit(0);
+      default:
+      printf("invalid");
+        }
+    }
+}
+
+     
+void create(int n){
+    int i,data;
+    struct node*newnode;
+    if(n>=1){
+         head=(struct node*)malloc(sizeof(struct node));
+         printf("enter data of 1 node");
+         scanf("%d",&data);
+         head->data=data;
+         head->prev=NULL;
+         head->next=NULL;
+         tail=head;
+         for(i=2;i<=n;i++){
+              newnode=(struct node*)malloc(sizeof(struct node));
+              printf("enter data of node %d",i);
+         scanf("%d",&data);
+         newnode->data=data;
+         newnode->prev=tail;
+         newnode->next=NULL;
+        tail->next=newnode;
+      tail=newnode;
+         }
+         printf("doubly linked lais created success");
+    }
+}
+         
+  
+void reverse(){
+    struct node*current,*nextnode;
+    current=head;
+    while(current!=0){
+        nextnode=current->next;
+        current->next=current->prev;
+        current->prev=nextnode;
+        current=nextnode;
+    }
+    current=head;
+    head=tail;
+    tail=current;
+    
+}
+void display(){
+    struct node*temp;
+    int n=1;
+    if(head==NULL){
+        printf("empty");
+    }
+    else{
+        temp=head;
+        printf("data in the liast");
+        while(temp!=NULL){
+            printf("data of %d node=%d\n",n,temp->data);
+            n++;
+            temp=temp->next;
+        }
+    }
+}
