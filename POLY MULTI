@@ -1,0 +1,108 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int coeff,expo;
+    struct node*link;
+}
+*phead,*qhead,*rhead;
+
+struct node* Readpoly(){
+    struct node*new,*ptr,*head=NULL;
+    int n,i;
+    printf("enter number of terms");
+    scanf("%d",&n);
+    printf("enter coeff and expo");
+    for(i=1;i<=n;i++){
+        printf("enter (coef%d,expo%d)",i,i);
+        new=(struct node*)malloc(sizeof(struct node));
+        scanf("%d",&new->coeff);
+        scanf("%d",&new->expo);
+        new->link=NULL;
+        if(head==NULL){
+            head=new;
+            ptr=head;
+        }
+        else{
+            ptr->link=new;
+            ptr=new;
+        }
+    }
+    return(head);
+}
+void Displaypoly(struct node*head){
+    struct node*ptr;
+    if(head==NULL){
+        printf("poly is emptu");
+    }
+    else{
+        ptr=head;
+        while(ptr->link!=NULL){
+            printf("%dx^%d + ",ptr->coeff,ptr->expo);
+            ptr=ptr->link;
+        }
+        printf("%dx^%d\t ",ptr->coeff,ptr->expo);
+    }
+        }
+  struct node* mulpoly(){
+      struct node*new,*p,*q,*r,*head=NULL,*prev;
+      p=phead;
+      q=qhead;
+     
+      
+      while(p!=NULL){
+          while(q!=NULL){
+              new=(struct node*)malloc(sizeof(struct node));
+              new->coeff=p->coeff*q->coeff;
+              new->expo=p->expo+q->expo;
+              new->link=NULL;
+          if(head==NULL){
+               head=new;
+               r=head;
+           }
+           else{
+               r->link=new;
+               r=new;
+           }
+           q=q->link;
+          }
+          p=p->link;
+          q=qhead;
+      }
+      p=head;
+      while(p!=NULL){
+          prev=p;
+          q=p->link;
+          while(q!=NULL){
+              if(p->expo==q->expo){
+              (p->coeff=p->coeff+q->coeff);
+              prev->link=q->link;
+              free(q);
+              q=prev->link;
+          }
+          else{
+              prev=q;
+              q=q->link;
+          }
+          }
+          p=p->link;
+      }
+      return(head);
+  }
+  
+      
+
+         
+      void main(){
+    printf("enter details of firsr poly");
+    phead=Readpoly();
+        printf("enter details of second poly");
+    qhead=Readpoly();
+    printf("first polynomail");
+    Displaypoly(phead);
+     printf("second polynomail");
+    Displaypoly(qhead);
+    rhead=mulpoly();
+    printf("resultant poly");
+    Displaypoly(rhead);
+}
