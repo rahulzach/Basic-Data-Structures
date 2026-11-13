@@ -1,27 +1,24 @@
-#include <stdio.h>
+#include<stdio.h>
 #define MAX 50
-int queue1[MAX],queue2[MAX];
-int front1 = -1,rear1 = -1,front2 = -1,rear2 = -1;
+
+int queue1[MAX], queue2[MAX];
+int front1 = -1, rear1 = -1, front2 = -1, rear2 = -1;
 int count;
 
 void enqueue1(int x)
 {
-    if(front1==-1)
+    if(front1 == -1)
         front1 = 0;
-
     queue1[++rear1] = x;
-    printf("queue1 %d\n",queue1[rear1]);
-    
+    printf("queue1 %d\n", queue1[rear1]);
 }
 
 void enqueue2(int x)
 {
-    if(front2==-1)
+    if(front2 == -1)
         front2 = 0;
-
     queue2[++rear2] = x;
-      printf("queue2 %d\n",queue2[rear2]);
-    
+    printf("queue2 %d\n", queue2[rear2]);
 }
 
 int dequeue1()
@@ -34,12 +31,11 @@ int dequeue2()
 {
     int x = queue2[front2++];
     return x;
-
 }
 
 void push(int x)
 {
-    if(rear1==MAX-1)
+    if(rear1 == MAX - 1)
         printf("overflow\n");
     else
     {
@@ -50,15 +46,13 @@ void push(int x)
 
 void pop()
 {
- 
-    while(front1<=rear1)
+    while(front1 <= rear1)
         enqueue2(dequeue1());
-    
-    while(front2<rear2)
+
+    while(front2 < rear2)
         enqueue1(dequeue2());
 
-    printf("The popped element is %d\n",dequeue2());
-   
+    printf("The popped element is %d\n", dequeue2());
 }
 
 int main()
